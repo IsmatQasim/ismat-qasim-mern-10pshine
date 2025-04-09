@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import signup from "../assets/login.jpg";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { BASE_URL } from '../constants/constant.js'
 
 const Signup = () => {
   const [name, setName] = useState("");
@@ -30,7 +31,7 @@ const Signup = () => {
     }
 
     try {
-      const response = await axios.post("http://localhost:5000/signup", {
+      const response = await axios.post(`${BASE_URL}/signup`, {
         name,
         email,
         password, 

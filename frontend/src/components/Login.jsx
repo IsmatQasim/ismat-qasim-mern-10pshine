@@ -5,6 +5,9 @@ import { Eye, EyeOff } from 'lucide-react';
 import login from "../assets/login.jpg"; 
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { BASE_URL } from '../constants/constant';
+
+
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -21,7 +24,7 @@ const Login = () => {
     }
 
     try {
-      const response = await axios.post('http://localhost:5000/login', {
+      const response = await axios.post(`${BASE_URL}/login`, {
         email,
         password,
       });
