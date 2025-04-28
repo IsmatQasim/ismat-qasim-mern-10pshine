@@ -1,10 +1,11 @@
 const express = require("express");
 const cors = require("cors");
 const dotenv = require("dotenv");
-const pino = require("pino")();
 const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
-const bcrypt = require("bcryptjs"); // Import bcryptjs
+const bcrypt = require("bcryptjs");
+const noteRoutes = require('./routes/noteRoutes');
+const logger = require("./logger"); 
 
 dotenv.config();
 
@@ -17,12 +18,13 @@ app.use(
   })
 );
 app.use(express.json());
+app.use('/api/notes', noteRoutes);
 
 // MongoDB connection
 mongoose
   .connect(process.env.MONGODB_URI)
-  .then(() => pino.info("Connected to MongoDB Atlas"))
-  .catch((err) => pino.error("MongoDB Atlas connection error:", err));
+  .then(() => logger.info("Connected to MongoDB Atlas"))
+  .catch((err) => logger.error("MongoDB Atlas connection error:", err));
 
 // User Schema
 const UserSchema = new mongoose.Schema({
@@ -32,6 +34,7 @@ const UserSchema = new mongoose.Schema({
 });
 
 const User = mongoose.model("User", UserSchema);
+module.exports = User;
 
 // Signup Route
 app.post("/signup", async (req, res) => {
@@ -47,9 +50,7 @@ app.post("/signup", async (req, res) => {
       return res.status(409).json({ message: "User already exists" });
     }
 
-    // Hash the password before saving
     const hashedPassword = await bcrypt.hash(password, 10);
-
     const newUser = new User({ name, email, password: hashedPassword });
     await newUser.save();
 
@@ -57,9 +58,11 @@ app.post("/signup", async (req, res) => {
       expiresIn: "1h",
     });
 
+    logger.info(`New user signed up: ${email}`);
+
     res.status(201).json({ message: "User registered", token });
   } catch (error) {
-    pino.error(error);
+    logger.error(error);
     res.status(500).json({ message: "Server error" });
   }
 });
@@ -75,10 +78,9 @@ app.post("/login", async (req, res) => {
   try {
     const user = await User.findOne({ email });
     if (!user) {
-      return res.status(404).json({ message: 'Email not registered' });
+      return res.status(404).json({ message: "Email not registered" });
     }
 
-    // Compare the hashed password with the input password
     const isMatch = await bcrypt.compare(password, user.password);
 
     if (!isMatch) {
@@ -89,15 +91,44 @@ app.post("/login", async (req, res) => {
       expiresIn: "1h",
     });
 
+    logger.info(`User logged in: ${email}`);
+
     res.status(200).json({ message: "Login successful", token });
   } catch (error) {
-    pino.error(error);
+    logger.error(error);
     res.status(500).json({ message: "Server error" });
+  }
+});
+
+
+app.get("/profile", async (req, res) => {
+  const token = req.headers.authorization?.split(" ")[1];
+
+  if (!token) {
+    return res
+      .status(401)
+      .json({ message: "Access denied. No token provided." });
+  }
+
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const user = await User.findById(decoded.id).select("name email");
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    logger.info(`Profile page visited by: ${user.email}`);
+
+    res.status(200).json({ name: user.name, email: user.email });
+  } catch (error) {
+    logger.error(error);
+    res.status(401).json({ message: "Invalid token" });
   }
 });
 
 // Server
 const port = process.env.PORT || 5000;
 app.listen(port, () => {
-  pino.info(`Server running on port ${port}`);
+  logger.info(`Server running on port ${port}`);
 });
