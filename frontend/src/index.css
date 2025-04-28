@@ -187,3 +187,249 @@ body {
   margin-bottom: 3rem;
   gap: 0.5rem;
 }
+
+.bento-box {
+  
+  padding: 16px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.bento-box:hover {
+  transform: scale(1.02);
+}
+
+.bento-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.bento-icon {
+  font-size: 26px;
+}
+
+.bento-title {
+  font-size: 25px;
+  margin: 0;
+}
+
+.bento-paragraph {
+  color: #aaa;
+  font-size: 18px;
+  margin-left: 32px;
+}
+
+
+.layout {
+  min-height: 100vh;
+  background-color: #040404;
+  padding: 40px 10px;
+  box-sizing: border-box;
+}
+.notes-container {
+  background-color:rgb(214, 207, 207);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 50px 0 0 60px;
+}
+
+.notes-heading {
+  color: #f8f8f8;
+  font-size: 48px;
+  margin: 0 0 10px 0; }
+
+.notes-text {
+  color: #ccc;
+  font-size: 20px;
+}
+/* Tooltip styles */
+.notes-container div[title] {
+  position: relative;
+}
+
+.notes-container div[title]:hover::after {
+  content: attr(title);
+  position: absolute;
+  top: 60px; 
+  right: 50%;
+  transform: translateX(50%);
+  background-color: rgba(0, 0, 0, 0.7);
+  color: white;
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+/* Note Editor */
+.container {
+  background-color: #040404;
+  min-height: 100vh;
+  padding: 2rem;
+  color: #fff;
+}
+
+.heading {
+  text-align: left;
+  margin: 20px 20px 20px 8px;
+  color: #fff;
+}
+
+.toolbar {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.toolButton {
+  padding: 5px 10px;
+  border-radius: 5px;
+  border: 1px solid #333;
+  background: #1a1a1a;
+  color: #fff;
+  cursor: pointer;
+}
+
+.colorInput {
+  border: none;
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+}
+
+.label {
+  color: #fff;
+}
+
+.select {
+  border: 1px solid #333;
+  border-radius: 5px;
+  padding: 5px;
+  background-color: #1a1a1a;
+  color: #fff;
+  cursor: pointer;
+}
+
+.titleBox {
+  width: 100%;
+  min-height: 50px;
+  border: 1px solid #333;
+  border-radius: 5px;
+  padding: 10px;
+  margin-bottom: 20px;
+  outline: none;
+  font-weight: bold;
+  font-size: 24px;
+  position: relative;
+}
+
+.editableBox {
+  width: 100%;
+  border: 1px solid #333;
+  border-radius: 5px;
+  padding: 10px;
+  margin-bottom: 20px;
+  outline: none;
+  position: relative;
+}
+
+.buttonGroup {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.saveButton {
+  background-color: #0f62fe;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+}
+
+.seeNotesButton {
+  background-color: #333;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+}
+
+/* Navbar */
+.notify-container {
+  position: relative;
+}
+
+.menu-button {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  background: transparent;
+  border: none;
+  z-index: 1000;
+  cursor: pointer;
+}
+
+.icon-white {
+  color: white;
+}
+
+.icon-black {
+  color: black;
+}
+
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 250px;
+  background-color: white;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  transform: translateX(-100%);
+  transition: transform 0.3s ease;
+  z-index: 999;
+}
+
+.sidebar.open {
+  transform: translateX(0);
+}
+
+.sidebar-content {
+  padding: 24px;
+}
+
+.sidebar-title {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 24px;
+}
+
+.nav-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.nav-list li {
+  margin-bottom: 16px;
+  font-size: 18px;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.nav-list li:hover {
+  color: #007bff; /* blue on hover */
+}
+
