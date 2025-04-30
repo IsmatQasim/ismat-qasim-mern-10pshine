@@ -6,8 +6,7 @@ import login from "../assets/login.jpg";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { BASE_URL } from '../constants/constant';
-
-
+import { Link } from 'react-router-dom';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -48,11 +47,9 @@ const Login = () => {
   return (
     <div className="login-container">
       <ToastContainer />
-
       <div className="geometric-pattern">
         <img src={login} alt="Login Illustration" />
       </div>
-
       <div className="login-form-container">
         <div className="form-content">
           <h1 className="login-title">Welcome Back To Notify!</h1>
@@ -98,10 +95,15 @@ const Login = () => {
               Log in
             </button>
           </form>
+         
 
           <div className="create-account">
             <p>Don't have an account? <a href="/signup">Create an account</a></p>
           </div>
+          <Link to="/forgot-password" className="forgot-password-link">
+  Forgot your password?
+</Link>
+
         </div>
       </div>
     </div>

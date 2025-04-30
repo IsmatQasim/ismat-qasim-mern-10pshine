@@ -7,6 +7,8 @@ import NotesPage from "./pages/NotesPage";
 import NoteEditor from "./pages/NoteEditor";
 import Profile from "./pages/Profile";
 import PrivateRoute from "./components/PrivateRoute";
+import ResetPassword from "./components/ResetPassword";
+import ForgotPassword from './components/ForgotPassword';
 
 const App = () => {
   return (
@@ -25,6 +27,8 @@ const App = () => {
         <Route path="/notes/:type" element={<NotesPage />} />
         <Route path="/editor" element={<NoteEditor />} />
         <Route path="/profile" element={<Profile />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/reset-password/:token" element={<ResetPassword />} />
       </Routes>
     </Router>
   );

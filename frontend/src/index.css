@@ -433,3 +433,39 @@ body {
   color: #007bff; /* blue on hover */
 }
 
+/* Forgot password */
+
+.forgot-password-link {
+  color: #9CA3AF;
+  text-decoration: underline;
+  margin-left: 120px;
+  margin-top: 12px;
+  display: inline-block;
+  transition: color 0.3s ease;
+}
+
+.forgot-password-link:hover {
+  color: white;
+}
+.sent-button {
+  padding: 0.5rem 1rem;
+  background-color: #040404;
+  color: white;
+  border-radius: 6px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  border: none;
+  cursor: pointer;
+}
+
+.sent-button:hover {
+  background-color: #1a1a1a;
+  transform: scale(1.05);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.sent-button:active {
+  transform: scale(0.95);
+  background-color: #000;
+  box-shadow: inset 0 2px 4px rgba(255, 255, 255, 0.1);
+}
