@@ -6,35 +6,38 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const noteRoutes = require('./routes/noteRoutes');
 const logger = require("./logger"); 
+const User = require('./models/user');
+const passwordRoutes = require('./routes/passwordRoutes');
+
+
 
 dotenv.config();
 
 const app = express();
 
+
 // Middleware
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: process.env.FRONTEND_URL,
   })
 );
+
 app.use(express.json());
+
 app.use('/api/notes', noteRoutes);
+app.use('/api/auth', passwordRoutes);
+
+app.get('/reset-password/:token', (req, res) => {
+  res.redirect(`/reset-password/${req.params.token}`);
+});
+
 
 // MongoDB connection
 mongoose
   .connect(process.env.MONGODB_URI)
   .then(() => logger.info("Connected to MongoDB Atlas"))
   .catch((err) => logger.error("MongoDB Atlas connection error:", err));
-
-// User Schema
-const UserSchema = new mongoose.Schema({
-  name: String,
-  email: { type: String, unique: true },
-  password: String,
-});
-
-const User = mongoose.model("User", UserSchema);
-module.exports = User;
 
 // Signup Route
 app.post("/signup", async (req, res) => {
