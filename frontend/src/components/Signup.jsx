@@ -39,9 +39,7 @@ const Signup = () => {
 
       if (response.status === 201) {
         toast.success("Signup successful! Redirecting to dashboard...");
-        setTimeout(() => {
           navigate("/dashboard");
-        }, 2000);
       }
     } catch (err) {
       if (err.response) {
@@ -75,7 +73,7 @@ const Signup = () => {
             Create a free account to get started using Notify
           </p>
 
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit} role="form">
             <div className="form-group">
               <label htmlFor="name" className="form-label">
                 Name

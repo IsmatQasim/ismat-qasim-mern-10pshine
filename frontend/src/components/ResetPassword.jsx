@@ -49,9 +49,8 @@ const ResetPassword = () => {
         { headers: { 'Content-Type': 'application/json' } }
       );
       toast.success('Password has been reset! Redirecting to login...');
-      setTimeout(() => {
-        navigate('/');
-      }, 5000);
+      // Remove the setTimeout and navigate immediately
+      navigate('/');
     } catch (err) {
       toast.error(err.response?.data?.message || 'Something went wrong. Please try again.');
     }

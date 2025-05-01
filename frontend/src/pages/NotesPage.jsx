@@ -15,13 +15,13 @@ import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 import { BASE_URL } from "../constants/constant.js";
 
-
 const generateRandomLightColor = () => {
   const hue = Math.floor(Math.random() * 360);
   const saturation = Math.floor(Math.random() * 15) + 55;
   const lightness = Math.floor(Math.random() * 10) + 85;
   return `hsl(${hue}, ${saturation}%, ${lightness}%)`;
 };
+
 const NotesPage = () => {
   const { type } = useParams();
   const [notes, setNotes] = useState([]);
@@ -100,7 +100,6 @@ const NotesPage = () => {
     const token = localStorage.getItem("token");
 
     try {
-    
       await axios.patch(
         `${BASE_URL}/api/notes/favorite/${note._id}`,
         { favorite: newFavoriteStatus },
@@ -110,19 +109,16 @@ const NotesPage = () => {
           },
         }
       );
-  
+
       toast.info(
         `Note marked as ${newFavoriteStatus ? "favourite" : "unfavourite"}`
       );
 
-    
       setNotes((prevNotes) => {
-       
         const updatedNotes = prevNotes.map((n) =>
           n._id === note._id ? { ...n, favorite: newFavoriteStatus } : n
         );
 
-     
         if (!newFavoriteStatus && type === "favourite") {
           return updatedNotes.filter((n) => n._id !== note._id);
         }
@@ -156,10 +152,10 @@ const NotesPage = () => {
     }
   };
 
-  if (loading) return <p style={{ color: "white" }}>Loading notes...</p>;
+  if (loading) return <p data-testid="loading-message" style={{ color: "white" }}>Loading notes...</p>;
   if (error)
     return (
-      <p className="error-message" style={{ color: "red" }}>
+      <p data-testid="error-message" className="error-message" style={{ color: "red" }}>
         {error}
       </p>
     );
@@ -167,6 +163,7 @@ const NotesPage = () => {
   return (
     <>
       <div
+        data-testid="notes-container"
         className="notes-container"
         style={{
           position: "relative",
@@ -176,6 +173,7 @@ const NotesPage = () => {
         }}
       >
         <div
+          data-testid="action-icons"
           style={{
             position: "absolute",
             top: "40px",
@@ -190,6 +188,7 @@ const NotesPage = () => {
               size={45}
               color="white"
               onClick={() => navigate("/editor")}
+              data-testid="create-note-icon"
             />
           </div>
           <div title="Go to Dashboard">
@@ -197,16 +196,18 @@ const NotesPage = () => {
               size={45}
               color="white"
               onClick={() => navigate("/dashboard")}
+              data-testid="dashboard-icon"
             />
           </div>
         </div>
 
-        <h1 className="notes-heading" style={{ color: "white" }}>
+        <h1 data-testid="notes-heading" className="notes-heading" style={{ color: "white" }}>
           {currentTitle}
         </h1>
 
         {notes.length > 0 ? (
           <div
+            data-testid="notes-grid"
             className="notes-grid"
             style={{
               display: "flex",
@@ -217,6 +218,7 @@ const NotesPage = () => {
           >
             {notes.map((note) => (
               <div
+                data-testid={`note-${note._id}`}
                 key={note._id}
                 className="note-box"
                 style={{
@@ -237,6 +239,7 @@ const NotesPage = () => {
                   }}
                 ></p>
                 <div
+                  data-testid="note-icons"
                   className="note-icons"
                   style={{
                     position: "absolute",
@@ -252,8 +255,9 @@ const NotesPage = () => {
                     style={{ cursor: "pointer" }}
                     onClick={() => {
                       setViewNote(note);
-                      setPopupColor(colorMap[note._id]); 
+                      setPopupColor(colorMap[note._id]);
                     }}
+                    data-testid={`view-note-icon-${note._id}`}
                   />
                   {note.favorite ? (
                     <HeartFilled
@@ -262,6 +266,7 @@ const NotesPage = () => {
                       fill="black"
                       style={{ cursor: "pointer" }}
                       onClick={() => handleToggleFavourite(note)}
+                      data-testid={`favorite-icon-${note._id}`}
                     />
                   ) : (
                     <Heart
@@ -269,6 +274,7 @@ const NotesPage = () => {
                       color="black"
                       style={{ cursor: "pointer" }}
                       onClick={() => handleToggleFavourite(note)}
+                      data-testid={`unfavorite-icon-${note._id}`}
                     />
                   )}
                   <Edit
@@ -276,19 +282,21 @@ const NotesPage = () => {
                     color="black"
                     style={{ cursor: "pointer" }}
                     onClick={() => handleEditNote(note)}
+                    data-testid={`edit-note-icon-${note._id}`}
                   />
                   <Trash
                     size={24}
                     color="red"
                     style={{ cursor: "pointer" }}
                     onClick={() => handleDeleteNote(note._id)}
+                    data-testid={`delete-note-icon-${note._id}`}
                   />
                 </div>
               </div>
             ))}
           </div>
         ) : (
-          <p style={{ color: "white" }}>
+          <p style={{ color: "white" }} data-testid="no-notes-message">
             No {currentTitle.toLowerCase()} available!
           </p>
         )}
@@ -297,6 +305,7 @@ const NotesPage = () => {
       {/* Modal Popup */}
       {viewNote && (
         <div
+          data-testid="popup-modal"
           className="popup-modal"
           style={{
             position: "fixed",
@@ -318,7 +327,7 @@ const NotesPage = () => {
               backgroundColor: popupColor,
               padding: "30px",
               borderRadius: "10px",
-              maxWidth: "500px",
+             maxWidth: "500px",
               width: "90%",
               boxShadow: "0 4px 12px rgba(0,0,0,0.4)",
             }}
@@ -350,4 +359,5 @@ const NotesPage = () => {
     </>
   );
 };
+
 export default NotesPage;

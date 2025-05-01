@@ -144,6 +144,7 @@ const NoteEditor = () => {
         value={content}
         config={config}
         tabIndex={1}
+        data-testid="content-editor"
         onBlur={(newContent) => setContent(newContent)}
         onChange={() => {}}
       />
