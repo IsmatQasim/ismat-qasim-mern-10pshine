@@ -9,7 +9,8 @@ module.exports = async function sendResetEmail(email, token) {
     },
   });
 
-  const resetUrl = `http://localhost:5173/reset-password/${token}`;
+  const resetUrl = `${process.env.FRONTEND_URL}/reset-password/${token}`;
+
 
   const mailOptions = {
     from: 'ismat6812@gmail.com',
