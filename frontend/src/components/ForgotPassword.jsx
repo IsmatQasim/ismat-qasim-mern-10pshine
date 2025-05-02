@@ -15,6 +15,7 @@ const ForgotPassword = () => {
       toast.error(err.response?.data?.message || 'Something went wrong');
     }
   };
+  document.body.style.backgroundColor = "#fff";
 
   return (
     <div style={{ padding: '2rem', textAlign: 'center', marginTop:'10rem'}}>

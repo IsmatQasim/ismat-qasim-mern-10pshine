@@ -12,13 +12,14 @@ const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
+
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!email || !password) {
-      toast.error('Please fill in all fields!');
+      toast.error('Please fill in all fields!'); 
       return;
     }
 
@@ -32,8 +33,8 @@ const Login = () => {
       toast.success('Login successful!');
       setTimeout(() => {
         navigate('/dashboard');
-      }, 1500);
-    } catch (err) {
+      }, 1500);    } 
+      catch (err) {
       if (err.response?.status === 404) {
         toast.error('Email not registered');
       } else if (err.response?.status === 401) {
@@ -41,6 +42,7 @@ const Login = () => {
       } else {
         toast.error('Something went wrong. Please try again.');
       }
+      
     }
   };
 
@@ -59,7 +61,9 @@ const Login = () => {
 
           <form onSubmit={handleSubmit}>
             <div className="form-group">
-              <label htmlFor="email" className="form-label">Email</label>
+              <label htmlFor="email" className="form-label">
+                Email
+              </label>
               <input
                 type="email"
                 id="email"
@@ -71,7 +75,9 @@ const Login = () => {
             </div>
 
             <div className="form-group">
-              <label htmlFor="password" className="form-label">Password</label>
+              <label htmlFor="password" className="form-label">
+                Password
+              </label>
               <div className="password-container">
                 <input
                   type={showPassword ? "text" : "password"}
@@ -85,25 +91,37 @@ const Login = () => {
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
                   className="password-toggle"
+                  data-testid="password-toggle"
                 >
                   {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
                 </button>
               </div>
             </div>
 
-            <button type="submit" className="btn btn-primary">
+            <button
+              type="submit"
+              className="btn btn-primary"
+              data-testid="login-button"
+              aria-label="login"
+              disabled={!email || !password}
+
+            >
               Log in
             </button>
           </form>
-         
 
           <div className="create-account">
-            <p>Don't have an account? <a href="/signup">Create an account</a></p>
+            <p>
+              Don't have an account? <Link to="/signup">Create an account</Link>
+            </p>
           </div>
-          <Link to="/forgot-password" className="forgot-password-link">
-  Forgot your password?
-</Link>
-
+          <Link
+            to="/forgot-password"
+            className="forgot-password-link"
+            data-discover="true"
+          >
+            Forgot your password?
+          </Link>
         </div>
       </div>
     </div>

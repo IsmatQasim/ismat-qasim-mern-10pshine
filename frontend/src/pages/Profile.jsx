@@ -33,6 +33,7 @@ const Profile = () => {
         setProfile(res.data);
       } catch (error) {
         console.error(error);
+        toast.error("Failed to load profile!");
         navigate("/");
       }
     };
@@ -139,15 +140,16 @@ const Profile = () => {
             }}
           />
 
-          <p style={{ fontSize: "25px" }}>
+          <p style={{ fontSize: "25px" }} data-testid="profile-name">
             <strong>Name:</strong> {profile.name}
           </p>
-          <p style={{ fontSize: "25px" }}>
+          <p style={{ fontSize: "25px" }}  data-testid="profile-email"> 
             <strong>Email:</strong> {profile.email}
           </p>
 
           <button
             onClick={handleLogout}
+            aria-label="Logout"
             style={{
               marginTop: "20px",
               padding: "15px 30px",
@@ -164,6 +166,7 @@ const Profile = () => {
           <br />
           <button
             onClick={() => setShowModal(true)}
+             data-testid="change-password-button"
             style={{
               marginTop: "20px",
               padding: "15px 30px",
@@ -179,97 +182,105 @@ const Profile = () => {
           </button>
         </div>
       ) : (
-        <p>Loading profile...</p>
+        <div>Loading profile...</div> // Can replace with a spinner for a better experience
       )}
 
       {showModal && (
-        <div
+  <div
+    style={{
+      position: "fixed",
+      top: 0,
+      left: 0,
+      width: "100vw",
+      height: "100vh",
+      backgroundColor: "rgba(0,0,0,0.7)",
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      zIndex: 999,
+    }}
+  >
+   <div
+  style={{
+    backgroundColor: "white",
+    padding: "30px",
+    borderRadius: "10px",
+    width: "400px",
+    display: "flex",
+    flexDirection: "column",
+    gap: "15px",
+  }}
+>
+ <h2 style={{ color: "#121212", textAlign: "center" }}>
+  Change Password
+</h2>
+
+
+      <input
+        type="password"
+        placeholder="Current Password"
+        value={currentPassword}
+        onChange={(e) => setCurrentPassword(e.target.value)}
+        style={{ padding: "10px" }}
+        aria-label="Current Password"
+      />
+
+      <input
+        type="password"
+        placeholder="New Password"
+        value={newPassword}
+        onChange={(e) => setNewPassword(e.target.value)}
+        style={{ padding: "10px" }}
+        aria-label="New Password"
+      />
+
+      <input
+        type="password"
+        placeholder="Confirm New Password"
+        value={confirmPassword}
+        onChange={(e) => setConfirmPassword(e.target.value)}
+        style={{ padding: "10px" }}
+        aria-label="Confirm New Password"
+      />
+
+      <div style={{ display: "flex", justifyContent: "space-between" }}>
+        <button
+          onClick={closeModal}
+          aria-label="Cancel"
           style={{
-            position: "fixed",
-            top: 0,
-            left: 0,
-            width: "100vw",
-            height: "100vh",
-            backgroundColor: "rgba(0,0,0,0.7)",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            zIndex: 999,
+            padding: "10px",
+            backgroundColor: "#ccc",
+            border: "none",
+            borderRadius: "5px",
+            cursor: "pointer",
           }}
         >
-          <div
-            style={{
-              backgroundColor: "white",
-              padding: "30px",
-              borderRadius: "10px",
-              width: "400px",
-              display: "flex",
-              flexDirection: "column",
-              gap: "15px",
-            }}
-          >
-            <h2 style={{ color: "#121212", textAlign: "center" }}>
-              Change Password
-            </h2>
+          Cancel
+        </button>
+        <button
+          onClick={handleChangePassword}
+          aria-label="Save New Password"
+          style={{
+            padding: "10px",
+            backgroundColor: "#F9629F",
+            border: "none",
+            borderRadius: "5px",
+            cursor: "pointer",
+            color: "#fff",
+          }}
+          disabled={loading}
+        >
+          {loading ? "Saving..." : "Save"}
+        </button>
+      </div>
 
-            <input
-              type="password"
-              placeholder="Current Password"
-              value={currentPassword}
-              onChange={(e) => setCurrentPassword(e.target.value)}
-              style={{ padding: "10px" }}
-            />
-
-            <input
-              type="password"
-              placeholder="New Password"
-              value={newPassword}
-              onChange={(e) => setNewPassword(e.target.value)}
-              style={{ padding: "10px" }}
-            />
-
-            <input
-              type="password"
-              placeholder="Confirm New Password"
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-              style={{ padding: "10px" }}
-            />
-
-            <div style={{ display: "flex", justifyContent: "space-between" }}>
-              <button
-                onClick={closeModal}
-                style={{
-                  padding: "10px",
-                  backgroundColor: "#ccc",
-                  border: "none",
-                  borderRadius: "5px",
-                  cursor: "pointer",
-                }}
-              >
-                Cancel
-              </button>
-              <button
-                onClick={handleChangePassword}
-                style={{
-                  padding: "10px",
-                  backgroundColor: "#F9629F",
-                  border: "none",
-                  borderRadius: "5px",
-                  cursor: "pointer",
-                  color: "#fff",
-                }}
-              >
-                {loading ? "Saving..." : "Save"}
-              </button>
-            </div>
-
-            {message && (
-              <p style={{ color: "red", textAlign: "center" }}>{message}</p>
-            )}
-          </div>
-        </div>
+      {message && (
+        <p style={{ color: "red", textAlign: "center" }}>{message}</p>
       )}
+    </div>
+  </div>
+
+)}
 
       <ToastContainer />
     </div>

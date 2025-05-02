@@ -9,7 +9,6 @@ import {
   Heart,
   CalendarDays,
   FilePen,
-  FileText,
   User2,
 } from "lucide-react";
 
