@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate , Link } from 'react-router-dom';
 import { Eye, EyeOff } from 'lucide-react';
 import login from "../assets/login.jpg"; 
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { BASE_URL } from '../constants/constant';
-import { Link } from 'react-router-dom';
 
 const Login = () => {
   const [email, setEmail] = useState('');

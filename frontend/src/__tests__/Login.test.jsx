@@ -20,7 +20,7 @@ vi.mock('react-router-dom', async () => {
 });
 
 beforeEach(() => {
-  vi.spyOn(window.localStorage.__proto__, 'setItem');
+  vi.spyOn(Object.getPrototypeOf(window.localStorage), 'setItem');
   window.localStorage.setItem = vi.fn();
 });
 
