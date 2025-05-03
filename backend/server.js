@@ -14,6 +14,7 @@ const passwordRoutes = require('./routes/passwordRoutes');
 dotenv.config();
 
 const app = express();
+module.exports = app;
 
 
 // Middleware
