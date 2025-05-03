@@ -143,7 +143,7 @@ const NoteEditor = () => {
         ref={editor}
         value={content}
         config={config}
-        tabIndex={1}
+        tabIndex={0}
         data-testid="content-editor"
         onBlur={(newContent) => setContent(newContent)}
         onChange={() => {}}

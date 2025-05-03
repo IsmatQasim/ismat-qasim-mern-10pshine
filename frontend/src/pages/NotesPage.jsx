@@ -54,26 +54,24 @@ const NotesPage = () => {
             },
           }
         );
+        
+        let filteredNotes;
 
-        let filteredNotes = response.data;
         if (type === "favourite") {
           filteredNotes = response.data.filter((note) => note.favorite);
         } else if (type === "drafts") {
-          filteredNotes = response.data.filter(
-            (note) => note.status === "draft"
-          );
+          filteredNotes = response.data.filter((note) => note.status === "draft");
         } else if (type === "today") {
           const today = new Date().toISOString().slice(0, 10);
           filteredNotes = response.data.filter(
             (note) => note.createdAt?.slice(0, 10) === today
           );
         } else {
-          filteredNotes = response.data.filter(
-            (note) => note.status !== "draft"
-          );
+          filteredNotes = response.data.filter((note) => note.status !== "draft");
         }
-
+        
         setNotes(filteredNotes);
+        
       } catch (err) {
         console.error("Error fetching notes:", err);
         setError("Failed to fetch notes. Please try again.");
@@ -96,7 +94,7 @@ const NotesPage = () => {
   }, [notes]);
 
   const handleToggleFavourite = async (note) => {
-    const newFavoriteStatus = note.favorite ? false : true;
+    const newFavoriteStatus = !note.favorite;
     const token = localStorage.getItem("token");
 
     try {
@@ -345,7 +343,7 @@ const NotesPage = () => {
                 borderRadius: "5px",
                 backgroundColor: "#333",
                 color: "white",
-                cursor: "pointer",
+                cursor: "pointer", 
               }}
               onClick={() => setViewNote(null)}
             >

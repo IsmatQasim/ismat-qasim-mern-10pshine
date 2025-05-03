@@ -26,7 +26,7 @@ describe('PrivateRoute', () => {
               </PrivateRoute>
             }
           />
-          <Route path="/login" element={<div>Login Page</div>} />
+          <Route path="/" element={<div>Login Page</div>} />
         </Routes>
       </MemoryRouter>
     );
