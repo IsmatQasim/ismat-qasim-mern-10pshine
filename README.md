@@ -12,7 +12,6 @@
 * [Backend (Testing)](#backend-testing)
 * [Installation](#installation)
 * [SonarQube Integration](#sonarqube-integration)
-* [License](#license)
 
 ---
 
