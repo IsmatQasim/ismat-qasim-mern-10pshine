@@ -1,5 +1,5 @@
-# Notify - A Note-Taking App ✍️📱
-<img width="1920" height="970" alt="image" src="https://github.com/user-attachments/assets/43e86458-1273-4b73-b049-324a72a42050" />
+# Notify - A Note-Taking App ✍️
+<img width="1920" height="970" alt="image" src="https://github.com/user-attachments/assets/b75c0c09-4e3f-4314-ad0e-20872a8ce906" />
 <img width="1915" height="969" alt="image" src="https://github.com/user-attachments/assets/82cd135e-1d57-40b0-8b32-3927eb8ba5b2" />
 <img width="1920" height="970" alt="image" src="https://github.com/user-attachments/assets/28d58eaf-55fc-4102-90b8-94e9c6fed324" />
 
